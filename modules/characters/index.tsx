@@ -31,7 +31,7 @@ const CharacterModule = (): ReactElement => {
     const pageNumbers = []
 
     const minPage = Math.max(currentPage - Math.floor(pagesToShow / 2), 1)
-    const maxPage = Math.min(minPage + pagesToShow - 1, data.info.count)
+    const maxPage = Math.min(minPage + pagesToShow - 1, data?.info?.pages)
 
     if (minPage > 1) {
       pageNumbers.push(
@@ -64,8 +64,8 @@ const CharacterModule = (): ReactElement => {
       )
     }
 
-    if (maxPage < data.info.count) {
-      if (maxPage < data.info.count - 1) {
+    if (maxPage < data?.info?.count) {
+      if (maxPage < data?.info?.count - 1) {
         pageNumbers.push(
           <Pagination.Ellipsis
             key='ellipsis-end'
@@ -75,10 +75,10 @@ const CharacterModule = (): ReactElement => {
       }
       pageNumbers.push(
         <Pagination.Item
-          key={data.info.count}
-          onClick={() => handlePageChange(data.info.count)}
+          key={data?.info?.count}
+          onClick={() => handlePageChange(data?.info?.count)}
         >
-          {data.info.count}
+          {data?.info?.count}
         </Pagination.Item>
       )
     }
