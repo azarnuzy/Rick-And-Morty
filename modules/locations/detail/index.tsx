@@ -2,7 +2,7 @@
 
 import { locationsState } from '@/recoil/location'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ReactElement } from 'react'
 import { Card, Col, Container, Row } from 'react-bootstrap'
 import { useRecoilState } from 'recoil'
@@ -12,11 +12,21 @@ type Props = {
 }
 
 const DetailLocationModule = ({ params }: Props): ReactElement => {
-  const [get] = useRecoilState(locationsState)
+  const [get, set] = useRecoilState(locationsState)
 
   const filteredLocations = get.data.filter((location) => {
     return location.location === params.name
   })
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const locations = localStorage.getItem('locations')
+    const nameLocations = localStorage.getItem('locationName')
+    if (locations && nameLocations) {
+      set(JSON.parse(locations))
+    }
+  }, [set])
 
   return (
     <Container>
