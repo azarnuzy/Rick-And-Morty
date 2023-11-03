@@ -19,12 +19,12 @@ const DetailLocationModule = ({ params }: Props): ReactElement => {
   })
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
-
-    const locations = localStorage.getItem('locations')
-    const nameLocations = localStorage.getItem('locationName')
-    if (locations && nameLocations) {
-      set(JSON.parse(locations))
+    if (typeof window !== 'undefined') {
+      const locations = localStorage.getItem('locations')
+      const nameLocations = localStorage.getItem('locationName')
+      if (locations && nameLocations) {
+        set(JSON.parse(locations))
+      }
     }
   }, [set])
 

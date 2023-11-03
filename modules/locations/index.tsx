@@ -8,23 +8,28 @@ import { Card, Container } from 'react-bootstrap'
 import { useRecoilState } from 'recoil'
 
 const LocationModule = (): ReactElement => {
-  const [get, set] = useRecoilState(locationNameState)
+  const [getRecoilLocations, setRecoilLocations] =
+    useRecoilState(locationsState)
+
+  const [getNameLocations, setNameLocations] = useRecoilState(locationNameState)
 
   useEffect(() => {
     if (typeof window === 'undefined') return
 
-    const locations = localStorage.getItem('locationName')
-    if (locations) {
-      set(JSON.parse(locations))
+    const locations = localStorage.getItem('locations')
+    const nameLocations = localStorage.getItem('locationName')
+    if (locations && nameLocations) {
+      setRecoilLocations(JSON.parse(locations))
+      setNameLocations(JSON.parse(nameLocations))
     }
-  }, [set])
+  }, [setNameLocations, setRecoilLocations])
 
   return (
     <div>
       <Container>
         <h1 className='mt-3 mb-4'>List of Locations</h1>
 
-        {get.map((location, index) => (
+        {getNameLocations?.map((location, index) => (
           <Link
             href={`/location/${location}`}
             key={index}
